@@ -1,7 +1,7 @@
-import { ExampleComponent } from '.'
+import { PillSwitcher } from '.'
 
-describe('ExampleComponent', () => {
+describe('PillSwitcher', () => {
   it('is truthy', () => {
-    expect(ExampleComponent).toBeTruthy()
+    expect(PillSwitcher).toBeTruthy()
   })
 })

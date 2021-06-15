@@ -1,10 +1,12 @@
 import React from 'react'
 
-import { ExampleComponent } from 'react-pill-switcher'
+import { PillSwitcher } from 'react-pill-switcher'
 import 'react-pill-switcher/dist/index.css'
 
 const App = () => {
-  return <ExampleComponent text="Create React Library Example 😄" />
+	return <div style={{padding: '3rem'}}>
+		<PillSwitcher options={['One', 'Two', 'Three']} name="example01" />
+	</div>
 }
 
 export default App
