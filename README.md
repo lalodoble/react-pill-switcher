@@ -10,20 +10,26 @@
 npm install --save react-pill-switcher
 ```
 
-## Usage
+## Simple Usage
 
-```jsx
-import React, { Component } from 'react'
+```js
+import PillSwitcher from 'react-pill-switcher'
 
-import MyComponent from 'react-pill-switcher'
-import 'react-pill-switcher/dist/index.css'
-
-class Example extends Component {
-  render() {
-    return <MyComponent />
-  }
+export function App() {
+  return <PillSwitcher options={['One', 'Two', 'Three']} />
 }
 ```
+
+## Demo
+
+[]()
+
+## Component Props
+|Prop               |Type                                                |Description                                       |
+|-------------------|----------------------------------------------------|--------------------------------------------------|
+|Name               |`'Isn't this fun?'`                                 |The name for the input element                    |
+|Options            |`Array` of `Strings` or `Objects {label, icon}`     |A list of options                                 |
+|onChange           |`event`                                             |OnChange event that returns the input value       |
 
 ## License
 
