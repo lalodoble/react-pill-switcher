@@ -4,7 +4,11 @@
   "description": "Made with create-react-library",
   "author": "lalodoble",
   "license": "MIT",
-  "repository": "lalodoble/react-pill-switcher",
+  "homepage": "https://github.com/lalodoble/react-pill-switcher",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lalodoble/react-pill-switcher"
+  },
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.js",
@@ -22,9 +26,6 @@
     "test:watch": "react-scripts test --env=jsdom",
     "predeploy": "cd example && npm install && npm run build",
     "deploy": "gh-pages -d example/build"
-  },
-  "peerDependencies": {
-    "react": "^16.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",
@@ -52,6 +53,7 @@
   ],
   "dependencies": {
     "classnames": "^2.3.1",
+    "react": "^16.0.0",
     "sass": "^1.35.0"
   }
 }
