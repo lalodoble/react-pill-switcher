@@ -7,7 +7,7 @@ import classNames from 'classnames'
 // }
 
 
-export function PillSwitcher({ name, options, onChange }) {
+export function PillSwitcher({ name, options, onChange, activeColor }) {
 	// const name = props.name;
 	// const options = props.options;
 	const defaultRef = useRef();
@@ -16,7 +16,7 @@ export function PillSwitcher({ name, options, onChange }) {
 	const [sizes, setSizes] = useState()
 
 	useEffect(() => {
-		if(defaultRef.current) {
+		if (defaultRef.current) {
 			setSizes({
 				width: defaultRef.current.clientWidth,
 				height: defaultRef.current.clientHeight,
@@ -44,7 +44,7 @@ export function PillSwitcher({ name, options, onChange }) {
 		})
 	}
 
-	return <div className={styles.pillSwitcher}>
+	return <div className={classNames(styles.pillSwitcher, 'pillSwitcher')}>
 		{options.map((opt, i) => {
 			const id = name + '-' + i
 			const isObject = typeof opt === 'object' ? true : false
@@ -53,17 +53,17 @@ export function PillSwitcher({ name, options, onChange }) {
 			return (
 				<div
 					key={i}
-					ref={opt === defaultValue  || (isObject && opt.label === defaultValue) ? defaultRef : null}
-					className={classNames(styles.switcher__tab, { [styles.active]: value === actualOption })}
+					ref={opt === defaultValue || (isObject && opt.label === defaultValue) ? defaultRef : null}
+					className={classNames(styles.switcher__tab, { [styles.active]: value === actualOption }, 'switcher__tab', { 'active': value === actualOption })}
 				>
-					<label htmlFor={id} className={styles.switcher__label} onClick={onClick}>
+					<label htmlFor={id} className={classNames(styles.switcher__label, 'switcher__label')} onClick={onClick}>
 						{isObject ?
-						<div className={styles.switcher__labelInner}>
-							<span className={styles.switcher__icon}>{opt.icon}</span>
-							<span className={styles.switcher__labelText}>{opt.label}</span>
-						</div>
-						:
-						opt
+							<div className={classNames(styles.switcher__labelInner, 'switcher__labelInner')}>
+								<span className={classNames(styles.switcher__icon, 'switcher__icon')}>{opt.icon}</span>
+								<span className={classNames(styles.switcher__labelText, 'switcher__labelText')}>{opt.label}</span>
+							</div>
+							:
+							opt
 						}
 					</label>
 					<input
@@ -71,13 +71,13 @@ export function PillSwitcher({ name, options, onChange }) {
 						name={name}
 						id={id}
 						value={actualOption}
-						className={styles.switcher__input}
+						className={classNames(styles.switcher__input, 'switcher__input')}
 						onChange={(e) => onChangeHandle(e)}
 					/>
 				</div>
 			)
 		})}
 
-		<span className={styles.switcher__bg} style={sizes}></span>
+		<span className={classNames(styles.switcher__bg, 'switcher__bg')} style={{...sizes, backgroundColor: activeColor || null}}></span>
 	</div>
 }

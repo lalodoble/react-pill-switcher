@@ -1,0 +1,86 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+
+:root {
+	font-size: 15px;
+}
+
+.pillSwitcher {
+	--h: 42px;
+	--padding: .25rem;
+	$accent: #8c7afc;
+	$trans: .25s ease-in-out;
+
+	background: #fafafa;
+	display: inline-flex;
+	flex-direction: row;
+	align-items: center;
+	position: relative;
+	border-radius: 0.75rem;
+	padding: 0.25rem;
+	box-shadow: inset 0 0 0 1px rgba(#000, 0.1);
+	font-family: "Open Sans", sans-serif;
+	// min-height: 42px;
+
+	* {
+		box-sizing: border-box;
+	}
+	
+	.switcher__tab {
+		border-radius: 0.6rem;
+		transition: color $trans, background $trans;
+		z-index: 2;
+		
+		.switcher__label {
+			font-size: .95rem;
+			line-height: 1em;
+			padding: 0.5rem 0.75rem;
+			display: inline-block;
+			min-height: calc(var(--h) - (var(--padding) * 2));
+			display: flex;
+			align-items: center;
+
+			color: #666;
+			transition: color $trans, background $trans;
+			cursor: pointer;
+
+			.switcher__labelInner {
+				pointer-events: none;
+				display: flex;
+				flex-direction: row;
+				gap: .25rem;
+				align-items: center;
+				color: #666;
+				transition: color $trans;
+			}
+		}
+
+		.switcher__input {
+			appearance: none;
+			width: 1px;
+			height: 1px;
+			position: absolute;
+			opacity: 0;
+		}
+
+		&.active {
+			// background: rgba(#000, 0.1);
+
+			.switcher__label, .switcher__labelInner {
+				color: white;
+			}
+		}
+	}
+
+	.switcher__bg {
+		position: absolute;
+		background: $accent;
+		border-radius: 0.6rem;
+		transition: all $trans;
+		z-index: 0;
+		
+		width: 2rem;
+		height: 2rem;
+		top: .25rem;
+		left: .25rem;
+	}
+}
