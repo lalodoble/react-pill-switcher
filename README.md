@@ -22,14 +22,16 @@ export function App() {
 
 ## Demo
 
-[]()
+Coming soon...
+<!-- []() -->
 
 ## Component Props
 |Prop               |Type                                                |Description                                       |
 |-------------------|----------------------------------------------------|--------------------------------------------------|
-|Name               |`'Isn't this fun?'`                                 |The name for the input element                    |
+|Name               |`String`                                            |The name for the input element                    |
 |Options            |`Array` of `Strings` or `Objects {label, icon}`     |A list of options                                 |
 |onChange           |`event`                                             |OnChange event that returns the input value       |
+|activeColor        |`string`                                            |Color code for the background of the pill         |
 
 ## License
 
