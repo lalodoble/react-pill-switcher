@@ -33,10 +33,10 @@
 	},
 	"dependencies": {
 		"classnames": "^2.3.1",
-		"react": "^16.0.0",
 		"sass": "^1.35.0"
 	},
 	"devDependencies": {
+    "react": "^17.0.0",
 		"babel-eslint": "^10.0.3",
 		"cross-env": "^7.0.2",
 		"eslint": "^6.8.0",
