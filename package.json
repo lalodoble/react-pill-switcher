@@ -1,7 +1,7 @@
 {
 	"name": "react-pill-switcher",
-	"version": "1.0.3",
-	"description": "Made with create-react-library",
+	"version": "1.0.4",
+	"description": "A simple yet beautifull switcher to transition between two or more options. Made for React.",
 	"author": "lalodoble",
 	"license": "MIT",
 	"homepage": "https://github.com/lalodoble/react-pill-switcher",

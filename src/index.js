@@ -6,32 +6,40 @@ import classNames from 'classnames'
 //   return <div className={styles.test}>miamam Component: {text}</div>
 // }
 
-
-export function PillSwitcher({ name, options, onChange, activeColor }) {
+export function PillSwitcher({ name, options, onChange, activeColor = null, activeBg = null, labelColor = null, on = null, isFull = false }) {
 	// const name = props.name;
 	// const options = props.options;
 	const defaultRef = useRef();
-	const [defaultValue, setDefaultValue] = useState(typeof options[0] === 'object' ? options[0].label : options[0])
-	const [value, setValue] = useState(typeof options[0] === 'object' ? options[0].label : options[0])
+	const [defaultValue, setDefaultValue] = useState(typeof options[0] === 'object' ? options[0].value || options[0].label : options[0])
+	const [value, setValue] = useState(typeof options[0] === 'object' ? options[0].value || options[0].label : options[0])
 	const [sizes, setSizes] = useState()
+
+	let labelStyles = {
+		color: labelColor
+	}
+
+	let activeLabelStyles = {
+		color: activeColor
+	}
 
 	useEffect(() => {
 		if (defaultRef.current) {
-			setSizes({
-				width: defaultRef.current.clientWidth,
-				height: defaultRef.current.clientHeight,
-				left: defaultRef.current.offsetLeft,
-				top: defaultRef.current.offsetTop,
-				transition: 'none',
-			})
+			setTimeout(() => {
+				setSizes({
+					width: defaultRef.current.clientWidth,
+					height: defaultRef.current.clientHeight,
+					left: defaultRef.current.offsetLeft,
+					top: defaultRef.current.offsetTop,
+					transition: 'none',
+				})
+			}, 200);
 		}
-	}, [defaultRef.current])
+	}, [defaultRef.current, on])
 
 	function onChangeHandle(e) {
 		const val = e.target.value
 		setValue(val)
 		onChange && onChange(val)
-
 	}
 
 	function onClick(e) {
@@ -44,21 +52,26 @@ export function PillSwitcher({ name, options, onChange, activeColor }) {
 		})
 	}
 
-	return <div className={classNames(styles.pillSwitcher, 'pillSwitcher')}>
+	return <div className={classNames(styles.pillSwitcher, 'pillSwitcher', { [styles.__full]: isFull }, { '--full': isFull })}>
 		{options.map((opt, i) => {
 			const id = name + '-' + i
 			const isObject = typeof opt === 'object' ? true : false
-			const actualOption = isObject ? opt.label : opt
+			const actualOption = isObject ? opt.value || opt.label : opt
 			// console.log(actualOption + ' - ' + value)
 			return (
 				<div
 					key={i}
-					ref={opt === defaultValue || (isObject && opt.label === defaultValue) ? defaultRef : null}
+					ref={opt === defaultValue || (isObject && actualOption === defaultValue) ? defaultRef : null}
 					className={classNames(styles.switcher__tab, { [styles.active]: value === actualOption }, 'switcher__tab', { 'active': value === actualOption })}
 				>
-					<label htmlFor={id} className={classNames(styles.switcher__label, 'switcher__label')} onClick={onClick}>
+					<label
+						htmlFor={id}
+						className={classNames(styles.switcher__label, 'switcher__label')}
+						onClick={onClick}
+						style={value === actualOption ? activeLabelStyles : labelStyles}
+					>
 						{isObject ?
-							<div className={classNames(styles.switcher__labelInner, 'switcher__labelInner')}>
+							<div className={classNames(styles.switcher__labelInner, 'switcher__labelInner')} 							>
 								<span className={classNames(styles.switcher__icon, 'switcher__icon')}>{opt.icon}</span>
 								<span className={classNames(styles.switcher__labelText, 'switcher__labelText')}>{opt.label}</span>
 							</div>
@@ -78,6 +91,6 @@ export function PillSwitcher({ name, options, onChange, activeColor }) {
 			)
 		})}
 
-		<span className={classNames(styles.switcher__bg, 'switcher__bg')} style={{...sizes, backgroundColor: activeColor || null}}></span>
+		<span className={classNames(styles.switcher__bg, 'switcher__bg')} style={{ ...sizes, backgroundColor: activeBg || null }}></span>
 	</div>
 }

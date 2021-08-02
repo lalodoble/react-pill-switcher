@@ -83,4 +83,20 @@
 		top: .25rem;
 		left: .25rem;
 	}
+
+	&.__full {
+		width: 100%;
+		display: grid;
+		grid-auto-flow: column;
+
+		.switcher__tab {
+			.switcher__label {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				align-items: center;
+				width: 100%;
+			}
+		}
+	}
 }

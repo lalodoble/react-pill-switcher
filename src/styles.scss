@@ -83,4 +83,18 @@
 		top: .25rem;
 		left: .25rem;
 	}
+
+	&.--full {
+		@apply w-full grid grid-flow-col;
+
+		.switcher__tab {
+			.switcher__label {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				align-items: center;
+				width: 100%;
+			}
+		}
+	}
 }
