@@ -34,6 +34,10 @@ Coming soon...
 |activeBg           |`color`                                             |Color code for the background of the pill         |
 |labelColor         |`color`                                             |Color code for the background of the active label |
 |activeColor        |`color`                                             |Color code for the active label                   |
+|className          |`str`                                               |Classes for the Switcher container                |
+|labelClassName     |`str`                                               |Classes for the Switcher labels                   |
+|labelActiveClassName          |`str`                                    |Classes for the Switcher labels when active       |
+|pillClassName     |`str`                                                |Classes for the Switcher Pill                     |
 |on                 |`any`                                               |When changed, the compoent is rerendered (used to prevent visual bugs)        |
 |isFull             |`boolean`                                           |If true, the component will fill the containers width|
 

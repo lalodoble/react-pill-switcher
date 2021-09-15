@@ -12,3 +12,19 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.mySwitcher {
+  box-shadow: inset 0 0 0 1px blue !important;
+}
+
+.myLabel {
+  color: blue !important;
+}
+
+.myPill {
+  background: blue !important;
+}
+
+.myLabel2 {
+  color: white !important;
+}

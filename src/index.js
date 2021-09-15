@@ -1,49 +1,72 @@
+/* eslint-disable react/self-closing-comp */
+/* eslint-disable no-unused-vars */
+/* eslint-disable prettier/prettier */
 import React, { useEffect, useRef, useState } from 'react'
-import styles from './styles.module.scss'
 import classNames from 'classnames'
 
-// export const ExampleComponent = ({ text }) => {
-//   return <div className={styles.test}>miamam Component: {text}</div>
-// }
 
-export function PillSwitcher({ name, options, onChange, activeColor = null, activeBg = null, labelColor = null, on = null, isFull = false }) {
+export function PillSwitcher({
+	name,
+	options = {
+		label: 'Option',
+		value: 1
+	},
+	onChange,
+	className = '',
+	labelClassName = '',
+	labelActiveClassName = '',
+	pillClassName = '',
+	on = null,
+	isFull = false
+}) {
 	// const name = props.name;
 	// const options = props.options;
 	const defaultRef = useRef();
+	const itemsRef = useRef([]);
 	const [defaultValue, setDefaultValue] = useState(typeof options[0] === 'object' ? options[0].value || options[0].label : options[0])
 	const [value, setValue] = useState(typeof options[0] === 'object' ? options[0].value || options[0].label : options[0])
 	const [sizes, setSizes] = useState()
+	const [activeIndex, setActiveIndex] = useState(0);
+	const [trigger, setTrigger] = useState(0);
 
-	let labelStyles = {
-		color: labelColor
-	}
-
-	let activeLabelStyles = {
-		color: activeColor
+	function addToRef(el) {
+		itemsRef.current.push(el);
 	}
 
 	useEffect(() => {
-		if (defaultRef.current) {
+		if (itemsRef.current[activeIndex]) {
 			setTimeout(() => {
 				setSizes({
-					width: defaultRef.current.clientWidth,
-					height: defaultRef.current.clientHeight,
-					left: defaultRef.current.offsetLeft,
-					top: defaultRef.current.offsetTop,
+					width: itemsRef.current[activeIndex].clientWidth,
+					height: itemsRef.current[activeIndex].clientHeight,
+					left: itemsRef.current[activeIndex].offsetLeft,
+					top: itemsRef.current[activeIndex].offsetTop,
 					transition: 'none',
 				})
 			}, 200);
 		}
-	}, [defaultRef.current, on])
+
+		function handleResize() {
+			setTrigger(trigger + 1);
+			window.removeEventListener("resize", handleResize);
+		}
+	
+		window.addEventListener("resize", handleResize);
+	}, [itemsRef.current, on, trigger])
+
+	useEffect(() => {
+	}, [])
 
 	function onChangeHandle(e) {
-		const val = e.target.value
-		setValue(val)
-		onChange && onChange(val)
+		const val = e.target.value;
+		const id = e.target.id;
+		setValue(val);
+		onChange && onChange(val);
+		setActiveIndex(parseInt(id.substr(id.lastIndexOf('-') + 1)));
 	}
 
 	function onClick(e) {
-		let active = e.target;
+		const active = e.target;
 		setSizes({
 			width: active.clientWidth,
 			height: active.clientHeight,
@@ -52,28 +75,28 @@ export function PillSwitcher({ name, options, onChange, activeColor = null, acti
 		})
 	}
 
-	return <div className={classNames(styles.pillSwitcher, 'pillSwitcher', { [styles.__full]: isFull }, { '--full': isFull })}>
+	return <div className={classNames('pillSwitcher', { '--full': isFull }, className)}>
 		{options.map((opt, i) => {
 			const id = name + '-' + i
-			const isObject = typeof opt === 'object' ? true : false
+			const isObject = typeof opt === 'object'
 			const actualOption = isObject ? opt.value || opt.label : opt
 			// console.log(actualOption + ' - ' + value)
 			return (
 				<div
 					key={i}
-					ref={opt === defaultValue || (isObject && actualOption === defaultValue) ? defaultRef : null}
-					className={classNames(styles.switcher__tab, { [styles.active]: value === actualOption }, 'switcher__tab', { 'active': value === actualOption })}
+					// ref={opt === defaultValue || (isObject && actualOption === defaultValue) ? defaultRef : null}
+					ref={addToRef}
+					className={classNames('switcher__tab', { 'active': value === actualOption })}
 				>
 					<label
 						htmlFor={id}
-						className={classNames(styles.switcher__label, 'switcher__label')}
+						className={classNames('switcher__label', labelClassName, { [labelActiveClassName]: value === actualOption })}
 						onClick={onClick}
-						style={value === actualOption ? activeLabelStyles : labelStyles}
 					>
 						{isObject ?
-							<div className={classNames(styles.switcher__labelInner, 'switcher__labelInner')} 							>
-								<span className={classNames(styles.switcher__icon, 'switcher__icon')}>{opt.icon}</span>
-								<span className={classNames(styles.switcher__labelText, 'switcher__labelText')}>{opt.label}</span>
+							<div className={classNames('switcher__labelInner')}>
+								<span className={classNames('switcher__icon')}>{opt.icon}</span>
+								<span className={classNames('switcher__labelText')}>{opt.label}</span>
 							</div>
 							:
 							opt
@@ -84,13 +107,13 @@ export function PillSwitcher({ name, options, onChange, activeColor = null, acti
 						name={name}
 						id={id}
 						value={actualOption}
-						className={classNames(styles.switcher__input, 'switcher__input')}
+						className={classNames('switcher__input')}
 						onChange={(e) => onChangeHandle(e)}
 					/>
 				</div>
 			)
 		})}
 
-		<span className={classNames(styles.switcher__bg, 'switcher__bg')} style={{ ...sizes, backgroundColor: activeBg || null }}></span>
-	</div>
+		<span className={classNames('switcher__bg', pillClassName)} style={{ ...sizes }}></span>
+	</div >
 }
